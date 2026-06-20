@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tooling scratch dir (remember plugin) — not project source.
+    ".remember/**",
   ]),
 ]);
 
