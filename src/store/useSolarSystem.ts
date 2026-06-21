@@ -11,6 +11,8 @@ interface SolarSystemState {
   tourActive: boolean;
   /** Whether floating planet labels are shown. */
   labelsVisible: boolean;
+  /** Whether the orbit path rings are shown. */
+  orbitsVisible: boolean;
   /** Audio muted (opt-in: starts muted). */
   muted: boolean;
 
@@ -22,6 +24,7 @@ interface SolarSystemState {
   setSpeed: (n: number) => void;
   setTour: (active: boolean) => void;
   toggleLabels: () => void;
+  toggleOrbits: () => void;
   toggleMute: () => void;
 }
 
@@ -36,6 +39,7 @@ export const useSolarSystem = create<SolarSystemState>((set) => ({
   speed: 1,
   tourActive: false,
   labelsVisible: true,
+  orbitsVisible: true,
   muted: true,
 
   select: (id, fromTour = false) =>
@@ -55,5 +59,6 @@ export const useSolarSystem = create<SolarSystemState>((set) => ({
       selectedId: active && s.selectedId === null ? "mercury" : s.selectedId,
     })),
   toggleLabels: () => set((s) => ({ labelsVisible: !s.labelsVisible })),
+  toggleOrbits: () => set((s) => ({ orbitsVisible: !s.orbitsVisible })),
   toggleMute: () => set((s) => ({ muted: !s.muted })),
 }));

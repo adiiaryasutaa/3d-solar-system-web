@@ -29,6 +29,7 @@ export default function Planet({
   const [hovered, setHovered] = useState(false);
 
   const toggle = useSolarSystem((s) => s.toggle);
+  const orbitsVisible = useSolarSystem((s) => s.orbitsVisible);
   const registry = usePlanetRegistry();
 
   // Register the body so CameraRig can read its live world position.
@@ -69,7 +70,7 @@ export default function Planet({
 
   return (
     <>
-      <OrbitRing radius={planet.orbitRadius} highlighted={hovered} />
+      {orbitsVisible && <OrbitRing radius={planet.orbitRadius} highlighted={hovered} />}
       <group ref={pivotRef} rotation-y={planet.initialAngle}>
         {/* Fixed axial-tilt frame at the orbit position; the body spins inside it. */}
         <group position={[planet.orbitRadius, 0, 0]} rotation-z={planet.tilt ?? 0}>

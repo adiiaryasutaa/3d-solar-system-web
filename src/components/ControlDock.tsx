@@ -11,6 +11,8 @@ export default function ControlDock() {
   const setSpeed = useSolarSystem((s) => s.setSpeed);
   const labelsVisible = useSolarSystem((s) => s.labelsVisible);
   const toggleLabels = useSolarSystem((s) => s.toggleLabels);
+  const orbitsVisible = useSolarSystem((s) => s.orbitsVisible);
+  const toggleOrbits = useSolarSystem((s) => s.toggleOrbits);
   const muted = useSolarSystem((s) => s.muted);
   const toggleMute = useSolarSystem((s) => s.toggleMute);
   const tourActive = useSolarSystem((s) => s.tourActive);
@@ -35,6 +37,9 @@ export default function ControlDock() {
         </IconBtn>
         <IconBtn active={labelsVisible} onClick={toggleLabels} label="Toggle labels">
           🏷
+        </IconBtn>
+        <IconBtn active={orbitsVisible} onClick={toggleOrbits} label="Toggle orbits">
+          ◯
         </IconBtn>
         <IconBtn active={!muted} onClick={toggleMute} label={muted ? "Unmute" : "Mute"}>
           {muted ? "🔇" : "🔊"}
