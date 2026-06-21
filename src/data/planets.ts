@@ -42,7 +42,34 @@ export interface Planet {
   ring?: { innerScale: number; outerScale: number; color: string };
   /** Optional real texture map (drop in public/textures/) — overrides procedural. */
   textureUrl?: string;
+  /**
+   * Optional Blender model (drop in public/models/, e.g. "/models/earth.glb").
+   * Authored to unit radius (1.0); scaled by `radius` at render. Overrides both
+   * the procedural sphere and `textureUrl`.
+   */
+  modelUrl?: string;
+  /** Separate Blender ring model (drop in public/models/) — overrides `ring`. */
+  ringModelUrl?: string;
+  /** Moons / satellites that orbit this planet (not selectable). */
+  satellites?: Satellite[];
   facts: PlanetFacts;
+}
+
+/** A small body orbiting a planet (e.g. the Moon). Decorative, not selectable. */
+export interface Satellite {
+  id: string;
+  name: string;
+  color: string;
+  /** Sphere radius in scene units. */
+  radius: number;
+  /** Orbit radius around the *parent planet's* center, in scene units. */
+  orbitRadius: number;
+  /** Relative angular speed around the parent. */
+  orbitSpeedFactor: number;
+  /** Starting angle (radians). */
+  initialAngle: number;
+  /** Optional Blender model (unit radius, scaled by `radius`). */
+  modelUrl?: string;
 }
 
 export interface SunConfig {
@@ -50,6 +77,8 @@ export interface SunConfig {
   name: string;
   color: string;
   radius: number;
+  /** Optional Blender model (unit radius). Rendered unlit so it always glows. */
+  modelUrl?: string;
   facts: PlanetFacts;
 }
 
@@ -58,6 +87,7 @@ export const SUN: SunConfig = {
   name: "Sun",
   color: "#ffcc33",
   radius: 4,
+  modelUrl: "/models/sun.glb",
   facts: {
     type: "G-type main-sequence star",
     diameter: "1,391,000 km",
@@ -77,6 +107,7 @@ export const SUN: SunConfig = {
 export const PLANETS: Planet[] = [
   {
     id: "mercury",
+    modelUrl: "/models/mercury.glb",
     name: "Mercury",
     color: "#9c9183",
     radius: 0.5,
@@ -101,6 +132,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "venus",
+    modelUrl: "/models/venus.glb",
     name: "Venus",
     color: "#e0b873",
     radius: 0.9,
@@ -125,6 +157,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "earth",
+    modelUrl: "/models/earth.glb",
     name: "Earth",
     color: "#4f8fcf",
     radius: 1,
@@ -133,6 +166,18 @@ export const PLANETS: Planet[] = [
     rotationSpeedFactor: 1,
     initialAngle: 2.4,
     tilt: 0.41,
+    satellites: [
+      {
+        id: "moon",
+        name: "Moon",
+        color: "#bdbdbd",
+        radius: 0.27,
+        orbitRadius: 2.2,
+        orbitSpeedFactor: 2.5,
+        initialAngle: 0.5,
+        modelUrl: "/models/moon.glb",
+      },
+    ],
     facts: {
       type: "Terrestrial planet",
       diameter: "12,742 km",
@@ -150,6 +195,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "mars",
+    modelUrl: "/models/mars.glb",
     name: "Mars",
     color: "#c1440e",
     radius: 0.7,
@@ -175,6 +221,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "jupiter",
+    modelUrl: "/models/jupiter.glb",
     name: "Jupiter",
     color: "#d8a47f",
     radius: 2.6,
@@ -202,6 +249,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "saturn",
+    modelUrl: "/models/saturn.glb",
     name: "Saturn",
     color: "#e3d9a6",
     radius: 2.2,
@@ -211,7 +259,7 @@ export const PLANETS: Planet[] = [
     initialAngle: 2.0,
     gas: true,
     tilt: 0.47,
-    ring: { innerScale: 1.4, outerScale: 2.3, color: "#cbb98f" },
+    ring: { innerScale: 1.25, outerScale: 2.3, color: "#cbb98f" },
     facts: {
       type: "Gas giant",
       diameter: "116,460 km",
@@ -230,6 +278,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "uranus",
+    modelUrl: "/models/uranus.glb",
     name: "Uranus",
     color: "#a6d9d9",
     radius: 1.6,
@@ -257,6 +306,7 @@ export const PLANETS: Planet[] = [
   },
   {
     id: "neptune",
+    modelUrl: "/models/neptune.glb",
     name: "Neptune",
     color: "#3b5bd9",
     radius: 1.5,

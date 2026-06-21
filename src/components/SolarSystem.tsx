@@ -9,8 +9,10 @@ import { useSolarSystem } from "@/store/useSolarSystem";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { PlanetRegistryProvider } from "./planetRegistry";
+import MilkyWay from "./MilkyWay";
 import Sun from "./Sun";
 import Planet from "./Planet";
+import Asteroids from "./Asteroids";
 import CameraRig from "./CameraRig";
 import PostFX from "./PostFX";
 
@@ -38,6 +40,7 @@ export default function SolarSystem() {
 
       <Suspense fallback={null}>
         <PlanetRegistryProvider>
+          <MilkyWay mobile={isMobile} />
           <Stars
             radius={300}
             depth={80}
@@ -51,6 +54,7 @@ export default function SolarSystem() {
           {PLANETS.map((planet) => (
             <Planet key={planet.id} planet={planet} paused={paused} speed={speed} />
           ))}
+          <Asteroids paused={paused} speed={speed} />
           <CameraRig controls={controlsRef} />
         </PlanetRegistryProvider>
       </Suspense>

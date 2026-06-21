@@ -9,6 +9,7 @@ import { usePlanetRegistry } from "./planetRegistry";
 import PlanetBody from "./PlanetBody";
 import OrbitRing from "./OrbitRing";
 import PlanetLabel from "./PlanetLabel";
+import Satellite from "./Satellite";
 
 // Base rates; per-planet factors and the global speed multiplier scale these.
 const ORBIT_BASE_SPEED = 0.12;
@@ -79,11 +80,21 @@ export default function Planet({
             gas={planet.gas}
             ring={planet.ring}
             textureUrl={planet.textureUrl}
+            modelUrl={planet.modelUrl}
+            ringModelUrl={planet.ringModelUrl}
             emissive={hovered}
             onClick={handleClick}
             onPointerOver={handleOver}
             onPointerOut={handleOut}
           />
+          {planet.satellites?.map((satellite) => (
+            <Satellite
+              key={satellite.id}
+              satellite={satellite}
+              paused={paused}
+              speed={speed}
+            />
+          ))}
         </group>
         <PlanetLabel
           id={planet.id}
